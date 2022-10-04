@@ -4,6 +4,7 @@ gsap.registerPlugin(CSSRulePlugin)
 
 import { data } from "./data"
 import { css } from "./css"
+import { dom } from "./dom";
 
 class Animation {
     btnpress(dom) {
@@ -157,6 +158,16 @@ class Animation {
             borderBottom: css.darkSpanBeforeBorder,
             borderLeft: css.darkSpanBeforeBorder
         })
+    }
+
+    textAreaShowHistory = () => {
+        gsap.to(dom.getInputDom(), { duration: 0.5, y: 24 })
+        gsap.to(dom.getShowDom(), { duration: 0.5, y: -24, opacity: 1, display: "block"})
+    }
+
+    textAreaHideHistory = () => {
+        gsap.to(dom.getInputDom(), {duration: 0, y: 0})
+        gsap.to(dom.getShowDom(), {duration: 0, y: 0, opacity: 0, display: "none"})
     }
 }
 

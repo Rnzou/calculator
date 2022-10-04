@@ -6,7 +6,10 @@ import { dom } from "./dom"
 import { math } from "./math"
 import { animation } from "./animation"
 
+const log = logMaker(true);
+
 class Calculator {
+
 
     constructor() {
         this.rule = rule
@@ -27,38 +30,61 @@ class Calculator {
         // console shows which button was pressed //
         this._checkRulesLog(currentInputInfo)
         let passAllRulesFlag = true
-        currentInputInfo.rule.every( ruleName => {
+        // check if all rules were followed //
+        currentInputInfo.rule.every(ruleName => {
             const ruleFuncName = this._generateRuleFunctionName(ruleName)
             if (this._ruleFuncExists(ruleFuncName)) {
                 passAllRulesFlag = passAllRulesFlag && this._ruleFuncExecute(ruleFuncName)
             } else {
                 passAllRulesFlag = false
-                console.log(`Cannot find this function : ${ruleFuncName}`, 'warn')
+                log(`Cannot find this function : ${ruleFuncName}`, 'warn')
             }
             return passAllRulesFlag
         })
+        // true means all rule passed //
         return passAllRulesFlag
     }
 
     _checkRulesLog = (currentInputInfo) => {
         const value = counter.next().value
         const tag = currentInputInfo.tag
-        console.log(`===== Counter: [${value}] Input: ${tag} =====`)
+        log(`===== Counter: [${value}] Input: ${tag} =====`)
     }
-
+    // return function name //
     _generateRuleFunctionName = (ruleFuncName) => {
         return `this.rule.${ruleFuncName}`
     }
-
+    // check if this function exist //
     _ruleFuncExists = (ruleFuncName) => {
         return typeof eval(ruleFuncName) === "function"
     }
-
+    // execute function //
     _ruleFuncExecute = (ruleFuncName) => {
         return eval(ruleFuncName)()
     }
 
     _run() {
+        this._addValue()
+        this._showResult()
+        this._clearAll()
+        this._clearLast()
+    }
+
+    _addValue = () => {
+        if (Status.currrentInputStatus.isAddValue) {
+            dom.getInputDom().value += Status.currentInputInfo.tag
+        }
+    }
+
+    _showResult = () => {
+        
+    }
+
+    _clearAll = () => {
+
+    }
+
+    _clearLast = () => {
 
     }
 }
