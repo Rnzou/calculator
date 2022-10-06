@@ -6,7 +6,7 @@ class Status {
     // current input //
     static currentInputInfo = null
     // current input status //
-    static currrentInputStatus = Status._getEachTimeInputStatus()
+    static currentInputStatus = Status._getEachTimeInputStatus()
     // current dom //
     static currentInputDomValue = Status.getInputDomValue()
     // current splited dom //
@@ -15,9 +15,11 @@ class Status {
     // current splited dom (optmized)) //
     static currentInputDomSplitOptmize = Status._getInputDomValueSplitOptmize()
 
+    static lastInputShowResult = false
+
     static generate(currentInputInfo) {
         Status.currentInputInfo = currentInputInfo
-        Status.currrentInputStatus = Status._getEachTimeInputStatus()
+        Status.currentInputStatus = Status._getEachTimeInputStatus()
         Status.currentInputDomValue = Status.getInputDomValue()
         Status.currentInputDomSplit = Status.getInputDomValueSplit()
         Status.currentInputDomSplitOptmize = Status._getInputDomValueSplitOptmize()

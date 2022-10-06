@@ -64,6 +64,7 @@ class Calculator {
     }
 
     _run() {
+        Status.lastInputShowResult = false
         this._addValue()
         this._showResult()
         this._clearAll()
@@ -71,21 +72,56 @@ class Calculator {
     }
 
     _addValue = () => {
-        if (Status.currrentInputStatus.isAddValue) {
+        if ( Status.currentInputStatus.isAddValue ) {
             dom.getInputDom().value += Status.currentInputInfo.tag
         }
     }
 
     _showResult = () => {
-        
+        if (Status.currentInputStatus.isShowResult) {
+            if (!dom.getInputDom().value.length) return
+            const analysisInput = Status.currentInputDomSplitOptmize.join('')
+            const calculateResult = math.calculate(analysisInput)
+
+            if (typeof calculateResult === "number") {
+                dom.getShowDom().value = analysisInput + '='
+                dom.getInputDom().value = calculateResult
+                animation.textAreaShowHistory()
+            }
+            Status.lastInputShowResult = true
+        }
     }
 
     _clearAll = () => {
+        if (Status.currentInputStatus.isclearAll) {
+            if (dom.getInputDom().value.length) {
+                dom.getInputDom().value = ''
+                this._calculateShowDomValue()
+            } else if (dom.getShowDom().value.length) {
+                dom.getShowDom().value = ''
+                animation.textAreaHideHistory()
+            }
+        }
+    }
 
+    _calculateShowDomValue = () => {
+        const history = dom.getShowDom().value.split('')
+        if (history.pop() === '=') {
+            dom.getShowDom().value += math.calculate(history.join(''))
+        }
     }
 
     _clearLast = () => {
-
+        if (Status.currentInputStatus.isClearLast) {
+            if (dom.getInputDom().value.length) {
+                const input = dom.getInputDom().value.split('')
+                input.pop()
+                dom.getInputDom().value = input.join('')
+            }
+            if (dom.getShowDom().value.length) {
+                this._calculateShowDomValue()
+            }
+        }
     }
 }
 

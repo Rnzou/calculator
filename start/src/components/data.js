@@ -77,6 +77,10 @@ class Data {
         )(info)
     }
 
+    _split = (info) => {
+        return info.split(this.pureOperatorReg).filter(e => e !== '')
+    }
+
     // prepare regular expression //
     _prepareRegular = (tagArray) => {
         const tag = tagArray.map(tag =>{
@@ -96,7 +100,7 @@ class Data {
             const elementToNumber = Number(element)
             //check if number exist or it is zero //
             if (elementToNumber || elementToNumber == 0) {
-                return math.calculator(elementToNumber).toString()
+                return math.calculate(elementToNumber).toString()
             }
             return element
         })

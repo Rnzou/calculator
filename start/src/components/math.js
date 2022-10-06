@@ -1,4 +1,4 @@
-import { create, all, expression } from 'mathjs'
+import { create, all } from 'mathjs'
 import { logMaker } from '../utils/log'
 
 const log = logMaker()
